@@ -1,11 +1,18 @@
+var express = require('express');
+var app = express();
+var path = require('path');
+
+app.use(express.static(__dirname)); // Current directory is root
 
 
-var connect = require('connect'),
-    http = require('http'),
-    directory = '/path/to/Folder';
 
-connect()
-    .use(connect.static(directory))
-    .listen(80);
+app.get('/test', function(req, res){
+  res.send('Hello World');
+});
 
-console.log('Listening on port 80.');
+
+
+var port = 8082
+app.listen(port);
+console.log('Listening on port', port);
+
