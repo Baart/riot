@@ -1,0 +1,16 @@
+
+body {
+}
+.panel
+{
+	display:block;
+	width:100%;
+}
+
+kda-directive {
+	display:inline-block;
+}
+
+input.newplayer {
+	width: :200px;
+}

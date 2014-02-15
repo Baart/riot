@@ -1,0 +1,47 @@
+
+<div class="kdacontainer" ng-controller="kdaController">
+
+	<p class="name"> {{ name }} ({{ id }}) </p>
+
+	<p class="title">Last game</p>
+	<input class="score" type="number" ng-model="kda.k"></input>
+	<input class="score" type="number" ng-model="kda.d"></input>
+	<input class="score" type="number" ng-model="kda.a"></input>
+
+	<br/>
+	<p>
+		<img src="http://static3.wikia.nocookie.net/__cb20130319091504/leagueoflegends/images/thumb/1/1b/Sight_Ward_item.png/20px-Sight_Ward_item.png" class="riot_ward">
+		Ward placed: {{ kda.wardplaced }}
+	</p>
+	<p>
+		<img src="http://static3.wikia.nocookie.net/__cb20130319091504/leagueoflegends/images/thumb/1/1b/Sight_Ward_item.png/20px-Sight_Ward_item.png" class="riot_ward">
+		Ward bought: {{ kda.wardbought }}
+	</p>
+
+	<p class="score">Last score: {{ getScore() }}</p>
+
+	<br/>
+
+	<p class="title">Last 10 game</p>
+
+	<input class="score" type="number" ng-model="kda.kt"></input>
+	<input class="score" type="number" ng-model="kda.dt"></input>
+	<input class="score" type="number" ng-model="kda.at"></input>
+	<br/>
+
+	<p>
+		<img src="http://static3.wikia.nocookie.net/__cb20130319091504/leagueoflegends/images/thumb/1/1b/Sight_Ward_item.png/20px-Sight_Ward_item.png" class="riot_ward">
+		Ward placed: {{ kda.wardplacedtotal }}
+	</p>
+		<p>
+		<img src="http://static3.wikia.nocookie.net/__cb20130319091504/leagueoflegends/images/thumb/1/1b/Sight_Ward_item.png/20px-Sight_Ward_item.png" class="riot_ward">
+		Ward bought: {{ kda.wardboughttotal }}
+	</p>
+
+	<p class="score">10 game score: {{ getTotalScore() }}</p>
+
+	<div style="text-align:center;">
+		<button ng-click="refresh()">refresh</button>
+	</div>
+
+</div>

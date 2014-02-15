@@ -1,0 +1,32 @@
+	
+<html ng-app="myApp" ng-controller="myAppController">
+<head>
+<script src="angular.js"></script>
+<script src="main.js"></script>
+<script src="kda.js"></script>
+<script src="playersdb.js"></script>
+<script src="riotapi.js"></script>
+<link rel="stylesheet" type="text/css" href="main.css"/>
+<link rel="stylesheet" type="text/css" href="kda.css"/>
+</head>
+
+<body>
+
+<button ng-repeat="player in players.all" ng-click="addPlayer(player.name)">{{player.name}}</button>
+<br>
+<label>New player<input ng-model="newplayer"></input></label><button ng-click="addPlayer(newplayer)">Add</button>
+
+
+<div class="panel">
+
+	<kda-directive ng-repeat="player in players.requested" name="{{player}}"></kda-directive>
+
+</div>
+	     
+<div class="panel">
+
+</div>
+         
+
+</body>
+</html>

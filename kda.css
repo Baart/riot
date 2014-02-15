@@ -1,0 +1,44 @@
+input.score{
+	width:50px;
+	margin-left:10px;
+	text-align:center;
+}
+
+.kdacontainer {
+	border:1px solid black;
+	background:rgb(200,200,200);
+	width:200px;
+	display:block;
+	padding:5px;
+	margin:5px;
+}
+
+p
+{
+	padding:0px;
+	margin:0px;
+	padding-left:10px;
+}
+
+p.name {
+	text-align: center;
+	font-weight:bold;
+	padding-bottom:10px;
+
+}
+
+p.title {
+	text-align: center;
+	font-weight:bold;
+	padding-bottom:2px;
+}
+
+p.score {
+	color: rgb(48, 116, 26);
+	font-weight: bold;
+	text-align: center;
+}
+
+img.riot_ward {
+	background:url("http://static3.wikia.nocookie.net/__cb20130319091504/leagueoflegends/images/thumb/1/1b/Sight_Ward_item.png/20px-Sight_Ward_item.png");
+}
