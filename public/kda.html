@@ -1,7 +1,7 @@
 
 <div class="kdacontainer" ng-controller="kdaController">
 
-	<p class="name"> {{ name }} ({{ id }}) </p>
+	<p class="name"> {{ kda.name }} ({{ kda.id }}) </p>
 
 	<p class="title">Last game</p>
 	<input class="score" type="number" ng-model="kda.k"></input>
@@ -18,7 +18,7 @@
 		Ward bought: {{ kda.wardbought }}
 	</p>
 
-	<p class="score">Last score: {{ getScore() }}</p>
+	<p class="score">Last score: {{ kda.getScore() }}</p>
 
 	<br/>
 
@@ -38,10 +38,10 @@
 		Ward bought: {{ kda.wardboughttotal }}
 	</p>
 
-	<p class="score">10 game score: {{ getTotalScore() }}</p>
+	<p class="score">10 game score: {{ kda.getTotalScore() }}</p>
 
 	<div style="text-align:center;">
-		<button ng-click="refresh()">refresh</button>
+		<button ng-click="kda.refresh()">Refresh</button>
 	</div>
 
 </div>

@@ -14,3 +14,7 @@ kda-directive {
 input.newplayer {
 	width: :200px;
 }
+
+.selected {
+	color:blue;
+}
