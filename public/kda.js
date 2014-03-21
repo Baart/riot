@@ -1,6 +1,6 @@
 
 
-var kda = angular.module("kda", ["riotapi"]);
+var kda = angular.module("kda", ["riotapi", "requesterapi"]);
 
 kda.directive("kdaDirective", function() {
 	return {
@@ -15,14 +15,15 @@ kda.directive("kdaDirective", function() {
 
 });
 
-kda.controller("kdaController", function ($scope, $rootScope, $http, $attrs, riotapiFactory, requesterFactory) {
+kda.controller("kdaController", function ($scope, $rootScope, $http, $attrs, riotapiFactory, requesterapiFactory) {
 
 function updateRecentGameByName() {
 
 		requesterapiFactory.getRecentGames($scope.name, function(data){
 				console.log("im back with an answer:", data);
+
+				$scope.id = data.summonerId;
 								
-				return;
 				var kt = 0;
 				var dt = 0;
 				var at = 0;
@@ -56,9 +57,6 @@ function updateRecentGameByName() {
 
 				$scope.kda.wardboughttotal =  wardboughttotal;
 				$scope.kda.wardplacedtotal =  wardplacedtotal;
-
-
-
 			})
 	}
 
@@ -107,16 +105,19 @@ function updateRecentGameByName() {
 	}
 
 	function updateId() {
+		/*
 		riotapiFactory.getIdFromName($scope.name, function(id){
 			console.log("im back with an id:", id);
 			$scope.id = id;
 			$scope.refresh();	
 		});
+		*/
 	}
 
 	$scope.$watch("name", function() {
 			//console.log("got a new name : ", $scope.name);
-			updateId()
+			//updateId()
+			$scope.refresh();
 		})
 
 

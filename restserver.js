@@ -199,10 +199,12 @@ var process = function(db) {
 
 
 
+var myDb;
 
 var onConnected = function(db) {
     console.log("connection ok");
     //process(db);
+    myDb = db;
 }
 
 
@@ -211,8 +213,79 @@ var onConnected = function(db) {
 
 ///  Express
 
+
+var express = require('express');
+var app = express();
+var path = require('path');
+
+app.use(express.static(__dirname+"/public")); // Current directory is root
+
+app.use(function(req, res, next) {
+    if (req.headers.origin) {
+        res.header('Access-Control-Allow-Origin', '*')
+        res.header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,Authorization')
+        res.header('Access-Control-Allow-Methods', 'GET,PUT,PATCH,POST,DELETE')
+        if (req.method === 'OPTIONS') return res.send(200)
+    }
+    next()
+})
+
+
+
+app.get('/test', function(req, res){
+  res.send('Hello World');
+});
+
+
+app.get('/stats/:name', function(req, res){
+
+    var name = req.params.name
+
+    var db = myDb;
+
+     // Search ID by summonerName
+    findPlayer(db, name, function(err, data) {
+        if(err) {
+            console.log("error in findPlayer:", err);
+            return;
+        }
+
+        var id = data.data.id;
+        var name = data.data.name;
+        console.log("found id:", id, "for player", name);
+
+        findStats(db, id, function(err, data) {
+            if(err) {
+                console.log("error in findStats:", err);
+                return;
+            }
+            //console.log("got data", data);
+            var games = data.games;
+
+            games.forEach(function(game) {
+                console.log("champ:", game.championId);
+            })
+            res.send(data);
+        })
+
+
+    });
+
+
+});
+
+
+
+
+var port = 8082
+app.listen(port);
+console.log('Listening on port', port);
+
+
+/*
+
 var host = "127.0.0.1";
-var port = 1337;
+var port = 8082;
 var express = require("express");
 
 var app = express();
@@ -224,3 +297,6 @@ app.get("/", function(request, response){ //root dir
 });
 
 app.listen(port, host);
+
+
+*/
