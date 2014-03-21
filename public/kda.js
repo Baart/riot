@@ -15,7 +15,52 @@ kda.directive("kdaDirective", function() {
 
 });
 
-kda.controller("kdaController", function ($scope, $rootScope, $http, $attrs, riotapiFactory) {
+kda.controller("kdaController", function ($scope, $rootScope, $http, $attrs, riotapiFactory, requesterFactory) {
+
+function updateRecentGameByName() {
+
+		requesterapiFactory.getRecentGames($scope.name, function(data){
+				console.log("im back with an answer:", data);
+								
+				return;
+				var kt = 0;
+				var dt = 0;
+				var at = 0;
+
+				var wardboughttotal = 0;
+				var wardplacedtotal = 0;
+
+				console.log($scope.id,  "->", data.games[0].stats);
+				for(var ii=0; ii < 10; ++ii)
+				{
+
+					kt += data.games[ii].stats.championsKilled ? data.games[ii].stats.championsKilled : 0;
+					dt += data.games[ii].stats.numDeaths ? data.games[ii].stats.numDeaths : 0;
+					at += data.games[ii].stats.assists ? data.games[ii].stats.assists : 0;
+
+					wardboughttotal += data.games[ii].stats.sightWardsBought ? data.games[ii].stats.sightWardsBought : 0;
+					wardplacedtotal += data.games[ii].stats.wardPlaced ? data.games[ii].stats.wardPlaced : 0;
+				}
+
+				$scope.kda.k = data.games[0].stats.championsKilled ? data.games[0].stats.championsKilled : 0;
+				$scope.kda.d = data.games[0].stats.numDeaths ? data.games[0].stats.numDeaths : 0;
+				$scope.kda.a = data.games[0].stats.assists ? data.games[0].stats.assists : 0;
+
+
+				$scope.kda.wardbought = data.games[0].stats.sightWardsBought ? data.games[0].stats.sightWardsBought : 0;
+				$scope.kda.wardplaced = data.games[0].stats.wardPlaced ? data.games[0].stats.wardPlaced : 0;
+
+				$scope.kda.kt = kt;
+				$scope.kda.dt = dt;
+				$scope.kda.at = at;
+
+				$scope.kda.wardboughttotal =  wardboughttotal;
+				$scope.kda.wardplacedtotal =  wardplacedtotal;
+
+
+
+			})
+	}
 
 
 	function updateRecentGame() {
@@ -86,7 +131,8 @@ kda.controller("kdaController", function ($scope, $rootScope, $http, $attrs, rio
 
 	$scope.refresh = function() {
 		reset();
-		updateRecentGame();		
+		//updateRecentGame();		
+		updateRecentGameByName();		
 	}
 
 
