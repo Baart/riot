@@ -1,10 +1,103 @@
 
 body {
+	display:flex;
+	flex-direction:column;
+	background: rgb(50,50,50);
+
+	color:rgb(250,250,250);
+
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+
+	padding:2px;
 }
-.panel
-{
-	display:block;
-	width:100%;
+
+
+.header,
+.footer {
+	display:flex;
+	text-align: center;
+	margin:auto;
+	height:40px;
+}
+
+.header span,
+.footer span {
+	display:flex;
+	flex-direction:column;
+	margin:auto;
+}
+.header span a,
+.footer span a {
+	flex:1;
+}
+
+.panel {
+	background:rgb(90,90,90);
+	border:1px solid rgb(40,40,40);
+	padding:4px;
+}
+
+.paneltitle {
+	padding:4px;
+	background:rgb(80,80,80);
+	border:1px solid rgb(40,40,40);
+	white-space:nowrap;
+	display: block;
+	
+
+}
+
+.mainpanel {
+	flex:1;
+	display:flex;
+	flex-direction:row;
+}
+
+
+.mainpanel .centerpanel {
+	flex:1;
+}
+
+.centerpanel div {
+	padding:8px;
+}
+
+.mainpanel .leftpanel {
+	min-width:150px;
+}
+.mainpanel .rightpanel {
+	min-width:150px;
+}
+
+.mainpanel .center {
+	flex:1;
+}
+
+
+.button {
+	padding:2px;
+	border:1px solid rgb(200,200,200);
+	background-color:rgb(150,150,150);
+	border-radius:5px;
+	margin-left:4px;
+	margin-right:4px;
+	margin-top:2px;
+	margin-bottom:2px;
+	min-width: 80px;
+	text-align: center;
+	cursor:pointer;
+}
+
+.button.a {
+	cusor:pointer;
+}
+
+.button:hover {
+	background-color:rgb(100,150,200);
+}
+
+.selected {
+	background-color:rgb(100,150,200);
 }
 
 kda-directive {
@@ -13,8 +106,4 @@ kda-directive {
 
 input.newplayer {
 	width: :200px;
-}
-
-.selected {
-	color:blue;
 }

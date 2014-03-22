@@ -86,19 +86,37 @@ var cleanCollection = function(db, collectionName) {
 
 
 var addPlayerToLocalDB = function(db, name, data) {
-    var doc = {name:name, data:data[name]};
+    var doc = {name:name, data:data[name], lastupdate:Date.now()};
     //console.log("adding player", name, "to local database");
     db.collection(playerCollection).insert(doc, {status:"ok"}, function(err, result) {
         //console.log("added player", name, "to local database");
     });
+
 }
 
 var addStatsToLocalDB = function(db, data) {
     var doc = data;
-    console.log("adding id", data.summonerId);
-    //console.log("-> data", data);
-    db.collection(statsCollection).insert(doc, {status:"ok"}, function(err, result) {
-        console.log("added id", data.summonerId);
+
+    var id = data.summonerId;
+    doc.lastupdate = Date.now();
+    doc._id = id;
+
+    console.log("adding id", id);
+    db.collection(statsCollection).update({_id:id}, doc, {upsert:true}, function(err, result) {
+        console.log("added id", id);
+    });
+
+}
+
+
+
+var findPlayers = function(db, callback) {
+    console.log("looking for players");
+    var collection = db.collection(playerCollection);
+    collection.find({}, {}, {limit:50}).toArray(function(err, docs) {
+
+        //console.log("DOCS:", docs);
+        callback(null, docs);
     });
 }
 
@@ -108,8 +126,8 @@ var findPlayer = function(db, name, callback) {
     name = name.toLowerCase();
     console.log("looking for player", name);
     var collection = db.collection(playerCollection);
-
-    collection.find({'name':name}).nextObject(function(err, doc) {
+    var query = { 'name':name };
+    collection.findOne(query, function(err, doc) {
         if(!doc) {
             console.log(name, "not in base yet");
             requestName(name, function(err, data) {
@@ -129,13 +147,35 @@ var findPlayer = function(db, name, callback) {
     });
 }
 
+
+
 var findStats = function(db, id, callback) {
     console.log("looking for id", id);
     var collection = db.collection(statsCollection);
+    
+    var query = {
+        'summonerId':id,
+        //'lastupdate': {
+        //    $gt: Date.now() - 10000 // update if older than 10 seconds
+        //}
+    };
 
-    collection.find({'summonerId':id}).nextObject(function(err, doc) {
+    collection.findOne(query, function(err, doc) {
+        var needUpdate = false;
+
         if(!doc) {
             console.log(id, "not in base yet");
+            needUpdate = true;
+        }
+
+        if(doc && Date.now() - doc.lastupdate > 10000) {
+            console.log(Date.now());
+            console.log(doc.lastupdate);
+            console.log(id, "not up to date in base, cachedsince:", (Date.now() - doc.lastupdate)/1000, "seconds");
+            needUpdate = true;
+        }
+
+        if(needUpdate) {
             requestInfo(id, function(err, data) {
                 if(err) {
                     console.log("cannot gather", id);
@@ -147,7 +187,7 @@ var findStats = function(db, id, callback) {
                 callback(err, data);
             });
         } else {
-            console.log(id, "already in base");//, doc)
+            console.log(id, "already up to date in base");//, doc)
             callback(err, doc);
         }
     });   
@@ -162,12 +202,22 @@ var processStats = function(err, data) {
     })
 }
 
-var process = function(db) {
-    //cleanCollection(db, statsCollection);
+
+var myDb;
+
+var onConnected = function(db) {
+    console.log("connection ok");
+    myDb = db;
+
+    /*
+    TESTS
+    */
     //cleanCollection(db, playerCollection);
-    
-    // Search ID by summonerName
-    findPlayer(db, "Bre", function(err, data) {
+    //cleanCollection(db, statsCollection);
+
+/*
+     // Search ID by summonerName
+    findPlayer(db, "Bart", function(err, data) {
         if(err) {
             console.log("error in findPlayer:", err);
             return;
@@ -182,29 +232,16 @@ var process = function(db) {
                 console.log("error in findStats:", err);
                 return;
             }
-
             //console.log("got data", data);
-
             var games = data.games;
 
             games.forEach(function(game) {
                 console.log("champ:", game.championId);
             })
         })
-
-
     });
-    
-}
+*/
 
-
-
-var myDb;
-
-var onConnected = function(db) {
-    console.log("connection ok");
-    //process(db);
-    myDb = db;
 }
 
 
@@ -237,11 +274,37 @@ app.get('/test', function(req, res){
 });
 
 
+app.get('/players', function(req, res) {
+
+    var db = myDb;
+    findPlayers(db, function(err, data) {
+        if(err) {
+            console.log("error in findPlayer:", err);
+            res.send([]);
+            return;
+        }
+        console.log("HEY:", data);
+        res.send(data);
+    })
+});
+
+
 app.get('/stats/:name', function(req, res){
 
     var name = req.params.name
-
     var db = myDb;
+
+    if(name == "hrp") {
+        cleanCollection(db, playerCollection);
+        res.send("ok");
+        return;
+    }
+
+    if(name == "hrs") {
+        cleanCollection(db, statsCollection);
+        res.send("ok");
+        return;
+    }
 
      // Search ID by summonerName
     findPlayer(db, name, function(err, data) {
@@ -249,6 +312,13 @@ app.get('/stats/:name', function(req, res){
             console.log("error in findPlayer:", err);
             return;
         }
+
+        if(!data || !data.data) {
+            console.log("unvalid player name")
+            return;
+        }
+
+        console.log(data.data);
 
         var id = data.data.id;
         var name = data.data.name;
@@ -267,8 +337,6 @@ app.get('/stats/:name', function(req, res){
             })
             res.send(data);
         })
-
-
     });
 
 
@@ -280,23 +348,3 @@ app.get('/stats/:name', function(req, res){
 var port = 8082
 app.listen(port);
 console.log('Listening on port', port);
-
-
-/*
-
-var host = "127.0.0.1";
-var port = 8082;
-var express = require("express");
-
-var app = express();
-app.use(app.router); //use both root and other routes below
-app.use(express.static(__dirname + "/public")); //use static files in ROOT/public folder
-
-app.get("/", function(request, response){ //root dir
-    response.send("Hello!!");
-});
-
-app.listen(port, host);
-
-
-*/

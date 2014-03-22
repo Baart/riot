@@ -1,37 +1,82 @@
-<!-- test modif from srv and modified back -->
-
-	
 <html ng-app="myApp" ng-controller="myAppController">
 <head>
-<script src="angular.js"></script>
-<script src="main.js"></script>
-<script src="kda.js"></script>
-<script src="playersdb.js"></script>
-<script src="riotapi.js"></script>
-<script src="requesterapi.js"></script>
-<link rel="stylesheet" type="text/css" href="main.css"/>
-<link rel="stylesheet" type="text/css" href="kda.css"/>
+	<script src="angular.js"></script>
+	<script src="main.js"></script>
+	<script src="kda.js"></script>
+	<script src="playersdb.js"></script>
+	<script src="riotapi.js"></script>
+	<script src="requesterapi.js"></script>
+	<link rel="stylesheet" type="text/css" href="reset.css"/>
+	<link rel="stylesheet" type="text/css" href="main.css"/>
+	<link rel="stylesheet" type="text/css" href="kda.css"/>
 </head>
 
 <body>
 
-<button 
-	ng-repeat="player in players.all" 	
-	ng-click="addPlayer(player.name)"
-	ng-class="{'selected': players.requested.indexOf(player.name) != -1}"
-	>{{player.name}}</button>
-<br>
-<label>New player<input ng-model="newplayer"></input></label><button ng-click="addPlayer(newplayer)">Add</button>
+	<div class="header">
+		<span>
+			<a>Improve my LOL skill</a>
+		</span>
+	</div>
+
+	<div class="mainpanel">
+
+		<div class="leftpanel panel">
+			<p class="paneltitle">Recent players</p>
+			<div class="button"
+				ng-repeat="player in players.all" 	
+				ng-click="addPlayer(player.name)"
+				ng-class="{'selected': players.requested.indexOf(player.name) != -1}"
+				>
+				<a>{{player.name}}</a>
+			</div>
 
 
-<div class="panel">
-	<kda-directive ng-repeat="player in players.requested" name="{{player}}"></kda-directive>
-</div>
-	     
-<div class="panel">
-	<p >{{ players.requested }} </p>
-</div>
-         
+		</div>
+
+		<div class="centerpanel panel">
+			<p class="paneltitle">Stats</p>
+
+
+			<div>
+				<input type="text" data-ng-model="newplayer" list="recentplayer">
+				<datalist id="recentplayer">
+				    <option  data-ng-repeat="player in players.all" value="{{player.name}}">
+				</datalist>
+				
+				<span class="button"
+					ng-click="addPlayer(newplayer)">
+					<a>Add</a>
+				</span>
+
+				<br>
+
+
+				<div class="">
+					<kda-directive ng-repeat="player in players.requested" name="{{player}}"></kda-directive>
+				</div>
+			</div>
+
+
+		</div>
+
+
+		<div class="rightpanel panel">
+			<p class="paneltitle">Debug</p>
+			<div class="debug">
+				<p ng-repeat="player in players.requested">{{player}}</p>
+			</div>
+		</div>
+
+	</div>
+
+
+	<div class="footer">
+		<span>
+			<p>footer</p>
+		</span>
+	</div>
+	         
 
 </body>
 </html>

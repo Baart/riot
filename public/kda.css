@@ -6,7 +6,7 @@ input.score{
 
 .kdacontainer {
 	border:1px solid black;
-	background:rgb(200,200,200);
+	background:rgb(100,100,100);
 	width:200px;
 	display:block;
 	padding:5px;
@@ -34,7 +34,7 @@ p.title {
 }
 
 p.score {
-	color: rgb(48, 116, 26);
+	color: rgb(10, 66, 26);
 	font-weight: bold;
 	text-align: center;
 }

@@ -1,14 +1,29 @@
 
-var myapp = angular.module("myApp", ["kda", "playersdb"]);
+var myapp = angular.module("myApp", ["kda", "requesterapi"]);
 
 
 
-myapp.controller("myAppController", function($scope, playersdbFactory) {
+myapp.controller("myAppController", function($scope, requesterapiFactory) {
 
 	$scope.players =  {
-		all: playersdbFactory.getList(),
+		all: [],
 		requested: []
 	};
+
+	requesterapiFactory.getPlayers(function(err, array) {
+
+		if(err) {
+			console.log('no players: ', err);
+			return;
+		}
+
+		$scope.players.all = [];
+		array.forEach(function(player) {
+			console.log("got player:", player.data);
+			$scope.players.all.push({name:player.data.name});
+		})
+	});
+
 
 	$scope.removePlayer = function(name) {
 		console.log("removing player", name);
