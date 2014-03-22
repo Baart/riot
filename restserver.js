@@ -61,8 +61,8 @@ var request = function(url, callback) {
 // display information
 
 
-//var address = "mongodb://weedoseeds.no-ip.org:27017/exampleDb"
-var address = "mongodb://localhost:27017/exampleDb"
+var address = "mongodb://weedoseeds.no-ip.org:27017/exampleDb"
+//var address = "mongodb://localhost:27017/exampleDb"
 // Retrieve
 var MongoClient = require('mongodb').MongoClient;
 
