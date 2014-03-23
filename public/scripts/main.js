@@ -7,7 +7,7 @@ myapp.controller("myAppController", function($scope, requesterapiFactory) {
 
 	$scope.players =  {
 		all: [],
-		requested: [""]
+		requested: []
 	};
 
 
