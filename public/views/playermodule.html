@@ -1,0 +1,56 @@
+
+<div class="playermodulecontainer" ng-controller="playermoduleController">
+
+	<div class="name"> 
+		<img 
+			class="portrait"
+			ng-src="resources/champions/champions_{{playermodule.lastgame.championId}}.jpg"
+			err-src="resources/champions/champions_.jpg"
+			></img>
+		<a>{{ playermodule.name }}</a>
+		<img 
+			class="spell"
+			ng-src ="resources/summonerspells/{{playermodule.lastgame.spell1 || 0}}.png"
+			err-src="resources/summonerspells/0.png"
+			></img>
+		<img 
+			class="spell"
+			ng-src="resources/summonerspells/{{playermodule.lastgame.spell2 || 0}}.png"
+			err-src="resources/summonerspells/0.png"
+			></img>
+		<a class="flexpad"></a>
+
+	</div>
+
+	<div class="basestats"> 
+		<p class="category">Main stats</p>
+		<p>K: {{playermodule.lastgame.stats.championsKilled || 0}}</p>
+		<p>D: {{playermodule.lastgame.stats.numDeaths || 0}}</p>
+		<p>A: {{playermodule.lastgame.stats.assists || 0}}</p>
+		<p class="comment">{{playermodule.kdastatus}}</p>
+	</div>
+
+	<div class="">
+		<p class="category">Last hits: </p>
+		<p>{{playermodule.lastgame.stats.minionsKilled || "0"}}</p>
+		<p>{{playermodule.lasthitper10 }} per 10 minutes </p>
+		<p class="comment">{{playermodule.lasthitstatus}}</p>
+	</div>
+
+
+	<div class="">
+		<p class="category">Meta: </p>
+		<span class="categoryimage"><img src="resources/ward.png"></span>
+		<p>{{ playermodule.lastgame.stats.wardPlaced || 0 }} ward placed</p>
+		<p>{{ playermodule.lastgame.stats.wardBought || 0 }} ward bought</p>
+		<p>{{ playermodule.wardper10 }} wards placed per 10 minutes</p>
+		<p class="comment">{{playermodule.wardstatus}}</p>
+	</div>
+
+	<p class="score">Final score: {{ playermodule.finalscore }}</p>
+
+	<div style="text-align:center;">
+		<button ng-click="playermodule.refresh()">Refresh</button>
+	</div>
+
+</div>

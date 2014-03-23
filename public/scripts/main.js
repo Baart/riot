@@ -1,5 +1,5 @@
 
-var myapp = angular.module("myApp", ["kda", "requesterapi", "chatmodule"]);
+var myapp = angular.module("myApp", ["kda", "requesterapi", "chatmodule", "playermodule"]);
 
 
 
@@ -7,7 +7,7 @@ myapp.controller("myAppController", function($scope, requesterapiFactory) {
 
 	$scope.players =  {
 		all: [],
-		requested: []
+		requested: ["Baarth"]
 	};
 
 

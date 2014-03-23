@@ -3,16 +3,18 @@
 	<script src="scripts/angular.js"></script>
 	<script src="scripts/main.js"></script>
 	<script src="scripts/kda.js"></script>
+	<script src="scripts/playermodule.js"></script>
 	<script src="scripts/chatmodule.js"></script>
 	<script src="scripts/playersdb.js"></script>
 	<script src="scripts/riotapi.js"></script>
 	<script src="scripts/requesterapi.js"></script>
-	<!--<script src="http://localhost:8082/socket.io/socket.io.js"></script>-->
-	<script src="http://weedoseeds.no-ip.org:8082/socket.io/socket.io.js"></script> 
+	<script src="http://localhost:8082/socket.io/socket.io.js"></script>
+	<!--<script src="http://weedoseeds.no-ip.org:8082/socket.io/socket.io.js"></script> -->
 
 	<link rel="stylesheet" type="text/css" href="styles/reset.css"/>
 	<link rel="stylesheet" type="text/css" href="styles/main.css"/>
 	<link rel="stylesheet" type="text/css" href="styles/kda.css"/>
+	<link rel="stylesheet" type="text/css" href="styles/playermodule.css"/>
 	<link rel="stylesheet" type="text/css" href="styles/chatmodule.css"/>
 </head>
 
@@ -56,10 +58,10 @@
 				</div>
 
 
-				<div class="">
-					<kda-directive ng-repeat="player in players.requested" name="{{player}}"></kda-directive>
-				</div>
+				<playermodule-directive ng-repeat="player in players.requested" name="player"></playermodule-directive>
+				<!--<kda-directive ng-repeat="player in players.requested" name="{{player}}"></kda-directive>-->
 			</div>
+
 
 
 			<chatmodule-directive></chatmodule-directive>

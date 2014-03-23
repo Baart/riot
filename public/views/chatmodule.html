@@ -1,6 +1,6 @@
 <div class="chatmodule" ng-controller="chatmoduleController">
 	<p class="paneltitle">Chat</p>
-	<div>
+	<div class="chatframe">
 		<div class="chatcontent">
 			<span ng-repeat="line in chat.lines">
 				<a>{{line.date}}: </a>
@@ -12,12 +12,12 @@
 
 		<input ng-model="chat.name"></input>
 		<input ng-model="chat.content" ng-keypress="chat.myFunct($event)"></input>
-		<div 
+		<span 
 			class="button"
 			ng-click="chat.sendMessage()"
 			ng-class="{'disabled': $scope.chat.content.length == 0}"
 			>
 				<a>Send</a>
-		</div>
+		</span>
 	</div>
 </div>

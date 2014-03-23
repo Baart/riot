@@ -1,0 +1,77 @@
+
+div.name {
+	display:flex;
+}
+
+div.name a{
+	vertical-align: middle;
+	margin:auto;
+	padding-left:24px;
+	padding-right:24px;
+}
+
+div.name img{
+	vertical-align: middle;
+	margin:auto;
+	margin-left:4px;
+}
+
+div.name img.portrait {
+	width:32px;
+	height:32px;
+}
+
+div.name img.spell {
+	width:20px;
+	height:20px;
+}
+
+.flexpad {
+	flex:1;
+}
+
+.playermodulecontainer {
+	border:1px solid black;
+	background:rgb(100,100,100);
+	display:block;
+	padding:5px;
+	margin:5px;
+	border-radius:3px;
+	width: 460px;
+	display:inline-block;
+}
+
+
+.playermodulecontainer .basestats a {
+	margin-right:14px;
+}
+
+p.name {
+	text-align: center;
+	font-weight:bold;
+	padding-bottom:10px;
+
+}
+
+p.category {
+	font-weight:bold;
+	padding-bottom:2px;
+	padding:8px;
+}
+
+p.comment {
+	font-style:italic;
+	padding:8px;
+}
+
+p.score {
+	color: rgb(200, 200, 200);
+	font-weight: bold;
+	text-align: center;
+	font-size:20px;
+}
+
+span.categoryimage {
+	padding:4px;
+}
+
