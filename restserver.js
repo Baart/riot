@@ -308,6 +308,7 @@ var lastMessages = [
 ];
 
 var addToChatHistory = function(date, name, message) {
+    console.log("adding name to histore", name)
     var message = {
         date:date,
         name:name,
@@ -333,7 +334,7 @@ sio.sockets.on('connection', function(socket) {
     // send former messages
     lastMessages.forEach(function(data) {
         sendMessageToClient(data.date, data.name, data.message)
-    });        
+    });
 
     socket.on('message_to_server', function(data) {
         if(data.message.length > 1024) {
@@ -342,7 +343,7 @@ sio.sockets.on('connection', function(socket) {
 
         //console.log('received', data);
         var date = getFormattedDate();
-        addToChatHistory(date, date.name, data.message);
+        addToChatHistory(date, data.name, data.message);
         sendMessageToClient(date, data.name, data.message);
     });
 });
