@@ -8,14 +8,6 @@ chatmodule.directive("chatmoduleDirective", function() {
 			templateUrl: "views/chatmodule.html",
 			link: function (scope, element, attrs) {
 
-
-/*
-				element.find('input').bind("keydown keypress", function (event) {
-	            
-        		})
-	            */
-
-
             }
 		};
 
@@ -31,7 +23,7 @@ chatmodule.controller("chatmoduleController", function ($scope, $rootScope, $htt
 
 	$scope.chat.myFunct = function (event) {
 		if(event.which === 13) {
-	                $scope.chat.sendMessage();
+            $scope.chat.sendMessage();
 	    }
 	}
 	
@@ -64,7 +56,6 @@ chatmodule.controller("chatmoduleController", function ($scope, $rootScope, $htt
     		message : $scope.chat.content,
     	});
     	$scope.chat.content = "";
-    	//$scope.$apply();
 	}
 
 
