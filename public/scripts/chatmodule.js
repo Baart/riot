@@ -5,7 +5,7 @@ var chatmodule = angular.module("chatmodule", []);
 chatmodule.directive("chatmoduleDirective", function() {
 	return {
 			restrict: "E",
-			templateUrl: "chatmodule.html",
+			templateUrl: "views/chatmodule.html",
 			link: function (scope, element, attrs) {
 
 

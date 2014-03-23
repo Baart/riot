@@ -9,7 +9,7 @@ kda.directive("kdaDirective", function() {
 				removePlayer:"&",
 			},
 			restrict: "E",
-			templateUrl: "kda.html",
+			templateUrl: "views/kda.html",
 			link: function (scope, element, attrs) {
 
             }
