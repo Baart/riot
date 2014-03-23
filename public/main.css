@@ -11,6 +11,12 @@ body {
 	padding:2px;
 }
 
+input {
+	background: rgb(160,160,160);
+	border-radius: 3px;
+	border: 1px solid rgb(100,100,100);
+}
+
 
 .header,
 .footer {
@@ -73,7 +79,6 @@ body {
 	flex:1;
 }
 
-
 .button {
 	padding:2px;
 	border:1px solid rgb(200,200,200);
@@ -86,6 +91,10 @@ body {
 	min-width: 80px;
 	text-align: center;
 	cursor:pointer;
+}
+
+div.stats {
+	min-height: 360;
 }
 
 .button.a {
@@ -106,4 +115,10 @@ kda-directive {
 
 input.newplayer {
 	width: :200px;
+}
+
+
+
+div.search {
+	text-align: center;
 }

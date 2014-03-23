@@ -3,12 +3,17 @@
 	<script src="angular.js"></script>
 	<script src="main.js"></script>
 	<script src="kda.js"></script>
+	<script src="chatmodule.js"></script>
 	<script src="playersdb.js"></script>
 	<script src="riotapi.js"></script>
 	<script src="requesterapi.js"></script>
+	<!--<script src="http://localhost:8082/socket.io/socket.io.js"></script>-->
+	<script src="http://weedoseeds.no-ip.org:8082/socket.io/socket.io.js"></script> 
+
 	<link rel="stylesheet" type="text/css" href="reset.css"/>
 	<link rel="stylesheet" type="text/css" href="main.css"/>
 	<link rel="stylesheet" type="text/css" href="kda.css"/>
+	<link rel="stylesheet" type="text/css" href="chatmodule.css"/>
 </head>
 
 <body>
@@ -36,20 +41,19 @@
 
 		<div class="centerpanel panel">
 			<p class="paneltitle">Stats</p>
-
-
-			<div>
-				<input type="text" data-ng-model="newplayer" list="recentplayer">
-				<datalist id="recentplayer">
-				    <option  data-ng-repeat="player in players.all" value="{{player.name}}">
-				</datalist>
-				
-				<span class="button"
-					ng-click="addPlayer(newplayer)">
-					<a>Add</a>
-				</span>
-
-				<br>
+			<div class="stats">
+				<div class="search">
+					<a>Search:</a>
+					<input type="text" data-ng-model="newplayer" list="recentplayer">
+					<datalist id="recentplayer">
+					    <option  data-ng-repeat="player in players.all" value="{{player.name}}">
+					</datalist>
+					
+					<span class="button"
+						ng-click="addPlayer(newplayer)">
+						<a>Add</a>
+					</span>
+				</div>
 
 
 				<div class="">
@@ -58,7 +62,11 @@
 			</div>
 
 
+			<chatmodule-directive></chatmodule-directive>
 		</div>
+
+
+
 
 
 		<div class="rightpanel panel">

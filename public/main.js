@@ -1,5 +1,5 @@
 
-var myapp = angular.module("myApp", ["kda", "requesterapi"]);
+var myapp = angular.module("myApp", ["kda", "requesterapi", "chatmodule"]);
 
 
 
@@ -10,6 +10,7 @@ myapp.controller("myAppController", function($scope, requesterapiFactory) {
 		requested: []
 	};
 
+
 	requesterapiFactory.getPlayers(function(err, array) {
 
 		if(err) {
@@ -19,7 +20,11 @@ myapp.controller("myAppController", function($scope, requesterapiFactory) {
 
 		$scope.players.all = [];
 		array.forEach(function(player) {
-			console.log("got player:", player.data);
+			//console.log("got player:", player, player.data);
+			if(!player.data) {
+				console.log("No valid data for this player");
+				return;
+			}	
 			$scope.players.all.push({name:player.data.name});
 		})
 	});
@@ -51,5 +56,6 @@ myapp.controller("myAppController", function($scope, requesterapiFactory) {
 		}
 		$scope.players.requested.push(name);	
 	}
+
 
 });

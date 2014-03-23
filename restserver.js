@@ -1,4 +1,6 @@
-var http = require("https");
+var https = require("https");
+//var http = require("http");
+
    
 
 var apikey = "9f6da8c3-d74c-445c-8208-3d746bfe844b";
@@ -18,7 +20,7 @@ var requestInfo = function(id, callback) {
 var request = function(url, callback) {
     // get is a simple wrapper for request()
     // which sets the http method to GET
-    http.get(url, function (response) {
+    https.get(url, function (response) {
         // data is streamed in chunks from the server
         // so we have to handle the "data" event    
         var buffer = "";
@@ -250,12 +252,105 @@ var onConnected = function(db) {
 
 ///  Express
 
+var port = 8082
 
 var express = require('express');
+var http = require("http");
+var io = require('socket.io');
+
 var app = express();
-var path = require('path');
+
+var server = http.createServer(app);
+
+server.listen(port, function() {
+    console.log('Listenning on port', port)
+})
+
+var sio = io.listen(server);
+
+
+app.use(express.bodyParser());
+app.use(express.methodOverride());
+
 
 app.use(express.static(__dirname+"/public")); // Current directory is root
+
+
+
+var fill = function(str, char, length) {
+    while(str.length < length) {
+        str = char + str;
+    }
+    return str;
+}
+
+
+var getFormattedDate = function() {
+    var now = new Date();
+
+    var h = now.getHours().toString();
+    var m = now.getMinutes().toString();
+    var s = now.getSeconds().toString();
+
+    var date = fill(h, '0', 2) + ':'
+             + fill(m, '0', 2) + ':' 
+             + fill(s, '0', 2);
+    return date;
+}
+
+
+var lastMessages = [
+    {
+        date: getFormattedDate(),
+        name: 'Server',
+        message: 'Started'
+    }
+];
+
+var addToChatHistory = function(date, name, message) {
+    var message = {
+        date:date,
+        name:name,
+        message:message
+    }
+    lastMessages.push(message);
+    while(lastMessages.length > 20) {
+        lastMessages.pop();
+    }
+}
+
+var sendMessageToClient = function(date, name, message) {
+    sio.sockets.emit("message_to_client",{ 
+        date: date,
+        name: name,
+        message: message
+    });
+}
+
+sio.sockets.on('connection', function(socket) {
+    console.log("connection !")
+
+    // send former messages
+    lastMessages.forEach(function(data) {
+        sendMessageToClient(data.date, data.name, data.message)
+    });        
+
+    socket.on('message_to_server', function(data) {
+        if(data.message.length > 1024) {
+            data.message = data.message.substr(0, 1024)
+        }
+
+        //console.log('received', data);
+        var date = getFormattedDate();
+        addToChatHistory(date, date.name, data.message);
+        sendMessageToClient(date, data.name, data.message);
+    });
+});
+
+
+
+
+
 
 app.use(function(req, res, next) {
     if (req.headers.origin) {
@@ -343,8 +438,3 @@ app.get('/stats/:name', function(req, res){
 });
 
 
-
-
-var port = 8082
-app.listen(port);
-console.log('Listening on port', port);

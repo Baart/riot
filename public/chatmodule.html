@@ -1,0 +1,23 @@
+<div class="chatmodule" ng-controller="chatmoduleController">
+	<p class="paneltitle">Chat</p>
+	<div>
+		<div class="chatcontent">
+			<span ng-repeat="line in chat.lines">
+				<a>{{line.date}}: </a>
+				<a>{{line.name}}: </a>
+				<a>{{line.content}}</a>
+				<br>
+			</span>
+		</div>
+
+		<input ng-model="chat.name"></input>
+		<input ng-model="chat.content" ng-keypress="chat.myFunct($event)"></input>
+		<div 
+			class="button"
+			ng-click="chat.sendMessage()"
+			ng-class="{'disabled': $scope.chat.content.length == 0}"
+			>
+				<a>Send</a>
+		</div>
+	</div>
+</div>
