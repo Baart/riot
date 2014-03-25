@@ -288,11 +288,18 @@ var fill = function(str, char, length) {
 var getFormattedDate = function() {
     var now = new Date();
 
+    var y = now.getFullYear().toString();
+    var M = (now.getMonth()+1).toString();
+    var d = now.getDate().toString();
+
     var h = now.getHours().toString();
     var m = now.getMinutes().toString();
     var s = now.getSeconds().toString();
 
-    var date = fill(h, '0', 2) + ':'
+    var date = y + '/'
+             + fill(M, '0', 2) + '/'
+             + fill(d, '0', 2) + '-'
+             + fill(h, '0', 2) + ':'
              + fill(m, '0', 2) + ':' 
              + fill(s, '0', 2);
     return date;
@@ -307,6 +314,7 @@ var lastMessages = [
     }
 ];
 
+
 var addToChatHistory = function(date, name, message) {
     console.log("adding name to histore", name)
     var message = {
@@ -315,8 +323,8 @@ var addToChatHistory = function(date, name, message) {
         message:message
     }
     lastMessages.push(message);
-    while(lastMessages.length > 20) {
-        lastMessages.pop();
+    while(lastMessages.length > 100) {
+        lastMessages.shift();
     }
 }
 
@@ -333,7 +341,14 @@ sio.sockets.on('connection', function(socket) {
 
     // send former messages
     lastMessages.forEach(function(data) {
-        sendMessageToClient(data.date, data.name, data.message)
+        //sendMessageToClient(data.date, data.name, data.message);
+
+        sio.sockets.socket(socket.id).emit("message_to_client",{ 
+            date: data.date,
+            name: data.name,
+            message: data.message
+        });
+
     });
 
     socket.on('message_to_server', function(data) {

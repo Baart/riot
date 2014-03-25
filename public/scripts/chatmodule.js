@@ -27,8 +27,8 @@ chatmodule.controller("chatmoduleController", function ($scope, $rootScope, $htt
 	    }
 	}
 	
-	//var socketio = io.connect("http://localhost:8082");
-	var socketio = io.connect("http://weedoseeds.no-ip.org:8082");
+	var socketio = io.connect("http://localhost:8082");
+	//var socketio = io.connect("http://weedoseeds.no-ip.org:8082");
 	socketio.on('init', function (data) {
             console.log('INIT', data.msg);
         });
@@ -36,7 +36,7 @@ chatmodule.controller("chatmoduleController", function ($scope, $rootScope, $htt
 	socketio.on("message_to_client", function(data) {
         console.log('message_to_client', data);
 		$scope.$apply(function() {
-			if($scope.chat.lines.length > 12) {
+			if($scope.chat.lines.length > 8) {
 				$scope.chat.lines.shift();
 			}
 			$scope.chat.lines.push(

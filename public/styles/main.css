@@ -9,6 +9,8 @@ body {
 	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
 
 	padding:2px;
+
+	font-size:16px;
 }
 
 input {
@@ -64,7 +66,7 @@ input {
 	flex:1;
 }
 
-.centerpanel div {
+.centerpanel > div {
 	padding:8px;
 }
 

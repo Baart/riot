@@ -10,14 +10,16 @@
 			</span>
 		</div>
 
-		<input ng-model="chat.name"></input>
-		<input ng-model="chat.content" ng-keypress="chat.myFunct($event)"></input>
-		<span 
-			class="button"
-			ng-click="chat.sendMessage()"
-			ng-class="{'disabled': $scope.chat.content.length == 0}"
-			>
-				<a>Send</a>
-		</span>
+		<div>
+			<input ng-model="chat.name"></input>
+			<input ng-model="chat.content" ng-keypress="chat.myFunct($event)"></input>
+			<span 
+				class="button"
+				ng-click="chat.sendMessage()"
+				ng-class="{'disabled': $scope.chat.content.length == 0}"
+				>
+					<a>Send</a>
+			</span>
+		</div>
 	</div>
 </div>
