@@ -27,8 +27,8 @@ chatmodule.controller("chatmoduleController", function ($scope, $rootScope, $htt
 	    }
 	}
 	
-	var socketio = io.connect("http://localhost:8082");
-	//var socketio = io.connect("http://weedoseeds.no-ip.org:8082");
+	//var socketio = io.connect("http://localhost:8082");
+	var socketio = io.connect("http://weedoseeds.no-ip.org:8082");
 	socketio.on('init', function (data) {
             console.log('INIT', data.msg);
         });
