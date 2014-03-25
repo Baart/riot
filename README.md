@@ -1,7 +1,7 @@
 riot
 ====
 
-Test for riot api 
-
-
-This is a modif
+Test project with :
+- the MEAN stack.
+- the RIOT api
+- socketio
