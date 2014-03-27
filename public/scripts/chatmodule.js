@@ -1,6 +1,6 @@
 
 
-var chatmodule = angular.module("chatmodule", []);
+var chatmodule = angular.module("chatmodule", ['ngCookies']);
 
 chatmodule.directive("chatmoduleDirective", function() {
 	return {
@@ -13,13 +13,41 @@ chatmodule.directive("chatmoduleDirective", function() {
 
 });
 
-chatmodule.controller("chatmoduleController", function ($scope, $rootScope, $http, $attrs, requesterapiFactory) {
+chatmodule.controller("chatmoduleController", function ($scope, $rootScope, $http, $attrs, $cookieStore) {
 
 	$scope.chat = { 
 		name: 'Anonymous',
 		content: '',
 		lines: [  ]
 	};
+	console.log('COOKIE', $cookieStore.get('chatname'));
+
+	var fakeNames = [
+		'Malphite', 
+		'Annie', 
+		'Ahri', 
+		'Talon', 
+		'Gragas', 
+		'Shaco', 
+		'Fizz', 
+		'Nocturne', 
+		'Alistar', 
+		'Blitzcrank', 
+		'Kassadin', 
+	];
+
+	if(!$cookieStore.get('chatname')) {
+		$scope.chat.name = fakeNames[Math.floor(Math.random()*fakeNames.length)];
+	} else {
+		$scope.chat.name = $cookieStore.get('chatname');
+	}
+
+
+	$scope.$watch('chat.name', function() {
+		console.log('new name:', $scope.chat.name);
+        $cookieStore.put('chatname', $scope.chat.name);		
+	})
+
 
 	$scope.chat.myFunct = function (event) {
 		if(event.which === 13) {

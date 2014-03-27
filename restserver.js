@@ -133,6 +133,7 @@ var findPlayer = function(db, name, callback) {
         if(!doc) {
             console.log(name, "not in base yet");
             requestName(name, function(err, data) {
+                console.log('response of requestName', err, data);
                 if(err) {
                     console.log("cannot gather", name);
                     callback(err, doc);
@@ -269,6 +270,10 @@ server.listen(port, function() {
 var sio = io.listen(server);
 
 
+app.use(express.cookieParser('COOKIE-SECRET-KEY'));
+app.use(express.cookieSession());
+
+
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 
@@ -383,6 +388,16 @@ app.use(function(req, res, next) {
 app.get('/test', function(req, res){
   res.send('Hello World');
 });
+
+
+app.get('/chatname', function(req, res) {
+    console.log('cookie route', req.cookies);
+    if (!req.cookies.chatname) {
+        res.send({name:'MALPHITE'});
+    } else {
+        res.send({name: req.cookies.chatname});
+    }
+})
 
 
 app.get('/players', function(req, res) {
