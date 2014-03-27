@@ -25,7 +25,7 @@ myapp.controller("myAppController", function($scope, requesterapiFactory, $cooki
 				console.log("No valid data for this player");
 				return;
 			}	
-			$scope.players.all.push({name:player.data.name});
+			$scope.players.all.push({name:player.data.name.replace(' ', '')});
 		})
 	});
 
