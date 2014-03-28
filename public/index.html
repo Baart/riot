@@ -11,8 +11,8 @@
 	<script src="scripts/riotapi.js"></script>
 	<script src="scripts/requesterapi.js"></script>
 	
-	<script src="http://localhost:8082/socket.io/socket.io.js"></script>
-	<!--<script src="http://weedoseeds.no-ip.org:8082/socket.io/socket.io.js"></script> -->
+	<!--<script src="http://localhost:8082/socket.io/socket.io.js"></script>-->
+	<script src="http://weedoseeds.no-ip.org:8082/socket.io/socket.io.js"></script> 
 
 	<link rel="stylesheet" type="text/css" href="styles/reset.css"/>
 	<link rel="stylesheet" type="text/css" href="styles/main.css"/>
@@ -46,24 +46,21 @@
 
 		<div class="centerpanel panel">
 			<div>
-			
-			<div class="stats">
-				<div class="search">
-					<a>Search:</a>
-					<input type="text" data-ng-model="newplayer" list="recentplayer">
-					<datalist id="recentplayer">
-					    <option  data-ng-repeat="player in players.all" value="{{player.name}}">
-					</datalist>
-					
-					<span class="button"
-						ng-click="addPlayer(newplayer)">
-						<a>Add</a>
-					</span>
+
+				<div class="stats">
+					<div class="search">
+						<a>Search:</a>
+						<input type="text" data-ng-model="newplayer" list="recentplayer">
+						<datalist id="recentplayer">
+						    <option  data-ng-repeat="player in players.all" value="{{player.name}}">
+						</datalist>
+						<span class="button"
+							ng-click="addPlayer(newplayer)">
+							<a>Add</a>
+						</span>
+					</div>
 				</div>
-
-
-				<!--<kda-directive ng-repeat="player in players.requested" name="{{player}}"></kda-directive>-->
-			</div>
+					
 				<playermodule-directive ng-repeat="player in players.requested" name="player"></playermodule-directive>
 			</div>
 
