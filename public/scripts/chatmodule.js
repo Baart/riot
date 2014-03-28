@@ -49,14 +49,14 @@ chatmodule.controller("chatmoduleController", function ($scope, $rootScope, $htt
 	})
 
 
-	$scope.chat.myFunct = function (event) {
+	$scope.chat.enterPressed = function (event) {
 		if(event.which === 13) {
             $scope.chat.sendMessage();
 	    }
 	}
 	
-	//var socketio = io.connect("http://localhost:8082");
-	var socketio = io.connect("http://weedoseeds.no-ip.org:8082");
+	var socketio = io.connect("http://localhost:8082");
+	//var socketio = io.connect("http://weedoseeds.no-ip.org:8082");
 	socketio.on('init', function (data) {
             console.log('INIT', data.msg);
         });

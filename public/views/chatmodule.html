@@ -12,7 +12,7 @@
 
 		<div>
 			<input ng-model="chat.name"></input>
-			<input ng-model="chat.content" ng-keypress="chat.myFunct($event)"></input>
+			<input ng-model="chat.content" ng-keypress="chat.enterPressed($event)"></input>
 			<span 
 				class="button"
 				ng-click="chat.sendMessage()"

@@ -96,7 +96,7 @@ input {
 }
 
 div.stats {
-	min-height: 570px;
+	/*min-height: 570px;*/
 }
 
 .button.a {
